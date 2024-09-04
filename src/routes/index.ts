@@ -11,14 +11,16 @@ import {
   updateUser,
 } from "../controllers/userControllers";
 import { checkToken } from "../middlewares/authMiddleware";
-import { profilePicUpdate } from "../middlewares/fileUploadUser";
+import { profilePicUpdate, upload } from "../middlewares/fileUploadUser";
 
 const routes = Router();
 
 // User Routes
 routes.route("/users").post(registerUser);
 routes.route("/users/login").post(loginUser);
-routes.route("/users").patch(checkToken, profilePicUpdate, updateUser);
+routes
+  .route("/users")
+  .patch(checkToken, upload.single("profilePic"), profilePicUpdate, updateUser);
 routes.route("/users").delete(checkToken, deleteUser);
 routes.route("/users").get(checkToken, getUser);
 routes.route("/users/logout").get(checkToken, logoutUser);

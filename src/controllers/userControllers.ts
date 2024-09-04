@@ -155,7 +155,7 @@ const getUser = async (req: Request, res: Response) => {
       ApiResponse.sendResponse(res, "User Id not found.", 400, {}, false);
     }
     const user = await Users.findById(req.userId).populate([
-      "bookList",
+      // "bookList",
       "followers",
       "following",
     ]);
@@ -181,12 +181,12 @@ const logoutUser = async (req: Request, res: Response) => {
 };
 const getUserProfile = async (req: Request, res: Response) => {
   try {
-    if (req.params.id) {
+    if (!req.params.id) {
       ApiResponse.sendResponse(res, "User Id not found.", 400, {}, false);
     }
 
     const user = await Users.findById(req.params.id).populate([
-      "bookList",
+      // "bookList",
       "followers",
       "following",
     ]);
@@ -195,14 +195,20 @@ const getUserProfile = async (req: Request, res: Response) => {
       ApiResponse.sendResponse(res, "User not found.", 404, {}, false);
     }
 
-    ApiResponse.sendResponse(res, "User Find successfully.", 200, {}, true);
+    ApiResponse.sendResponseWithUserData(
+      res,
+      "User Find successfully.",
+      200,
+      true,
+      user
+    );
   } catch (error: any) {
     ApiResponse.errorHandler(res, error);
   }
 };
 const follow = async (req: Request, res: Response) => {
   try {
-    if (req.params.id || req.userId) {
+    if (!req.params.id || !req.userId) {
       ApiResponse.sendResponse(res, "User Ids are required.", 400, {}, false);
     }
 
@@ -242,7 +248,7 @@ const follow = async (req: Request, res: Response) => {
 };
 const unFollow = async (req: Request, res: Response) => {
   try {
-    if (req.params.id || req.userId) {
+    if (!req.params.id || !req.userId) {
       ApiResponse.sendResponse(res, "User Ids are required.", 400, {}, false);
     }
 
