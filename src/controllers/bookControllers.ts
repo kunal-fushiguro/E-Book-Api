@@ -130,6 +130,9 @@ const deleteBook = async (req: Request, res: Response) => {
     await cloudinary.uploader.destroy(fileId);
 
     await Books.findByIdAndDelete(book?._id);
+    await Users.findByIdAndUpdate(book?.userId, {
+      $pull: { bookList: book?._id },
+    });
 
     ApiResponse.sendResponse(res, "Book deleted successfully.", 200, {}, true);
   } catch (error: any) {

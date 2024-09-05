@@ -57,7 +57,10 @@ const bookfileUpload = async (
       }
     });
 
-    const fileUrl = await cloudinary.uploader.upload(filePath);
+    const fileUrl = await cloudinary.uploader.upload(filePath, {
+      format: "pdf",
+      resource_type: "auto",
+    });
 
     fs.unlink(filePath, (err) => {
       if (err) {

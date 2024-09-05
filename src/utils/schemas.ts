@@ -51,7 +51,7 @@ const updateBookSchema = z.object({
     .min(10, { message: "About must be atleast 10 characters long" }),
   coverImage: z.string({ required_error: "Cover Image is required." }),
   file: z.string({ required_error: "File is required." }),
-  isPublic: z.boolean({ required_error: "isPublic is required." }),
+  // isPublic: z.boolean({ required_error: "isPublic is required." }),
 });
 
 const createReviewsSchema = z.object({

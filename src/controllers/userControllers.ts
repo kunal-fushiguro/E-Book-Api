@@ -186,7 +186,7 @@ const getUserProfile = async (req: Request, res: Response) => {
     }
 
     const user = await Users.findById(req.params.id).populate([
-      // "bookList",
+      "bookList",
       "followers",
       "following",
     ]);
